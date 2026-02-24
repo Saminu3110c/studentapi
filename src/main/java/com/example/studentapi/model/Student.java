@@ -7,6 +7,7 @@ public class Student {
     private String email;
     private int age;
 
+    // Required for Spring (JSON -> Object conversion)
     public Student() {}
 
     public Student(Integer id, String name, String email, int age) {
@@ -16,5 +17,37 @@ public class Student {
         this.age = age;
     }
 
-    // getters and setters
+    // ===== GETTERS =====
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    // ===== SETTERS =====
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
