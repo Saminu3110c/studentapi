@@ -12,6 +12,6 @@
     - HTTP status mapping
 
 ## Use the following command to run
-    ```bash
+    ```
         ./mvnw spring-boot:run
     ```
