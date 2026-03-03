@@ -1,16 +1,16 @@
 package com.example.studentapi.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
 
-    @NotNull(message = "Id is required")
+    @Id
     private Integer id;
 
     @NotBlank(message = "Name cannot be empty")
