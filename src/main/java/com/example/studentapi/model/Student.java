@@ -1,5 +1,6 @@
 package com.example.studentapi.model;
 
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,63 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Student {
 
+    @NotNull(message = "Id is required")
     private Integer id;
+
+    @NotBlank(message = "Name cannot be empty")
     private String name;
+
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email is required")
     private String email;
+
+    @Min(value = 1, message = "Age must be greater than 0")
     private int age;
 }
-
-
-// package com.example.studentapi.model;
-
-// public class Student {
-
-//     private Integer id;
-//     private String name;
-//     private String email;
-//     private int age;
-
-//     // Required for Spring (JSON -> Object conversion)
-//     public Student() {}
-
-//     public Student(Integer id, String name, String email, int age) {
-//         this.id = id;
-//         this.name = name;
-//         this.email = email;
-//         this.age = age;
-//     }
-
-//     // ===== GETTERS =====
-//     public Integer getId() {
-//         return id;
-//     }
-
-//     public String getName() {
-//         return name;
-//     }
-
-//     public String getEmail() {
-//         return email;
-//     }
-
-//     public int getAge() {
-//         return age;
-//     }
-
-//     // ===== SETTERS =====
-//     public void setId(Integer id) {
-//         this.id = id;
-//     }
-
-//     public void setName(String name) {
-//         this.name = name;
-//     }
-
-//     public void setEmail(String email) {
-//         this.email = email;
-//     }
-
-//     public void setAge(int age) {
-//         this.age = age;
-//     }
-// }

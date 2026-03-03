@@ -3,6 +3,7 @@ package com.example.studentapi.controller;
 import com.example.studentapi.model.Student;
 import com.example.studentapi.service.StudentService;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public void addStudent(@RequestBody Student student) {
+    public void addStudent(@Valid @RequestBody Student student) {
         service.addStudent(student);
     }
 
