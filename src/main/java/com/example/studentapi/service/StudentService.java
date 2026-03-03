@@ -1,5 +1,7 @@
 package com.example.studentapi.service;
 
+import com.example.studentapi.exception.DuplicateStudentException;
+import com.example.studentapi.exception.StudentNotFoundException;
 import com.example.studentapi.model.Student;
 import com.example.studentapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -18,19 +20,20 @@ public class StudentService {
 
     public void addStudent(Student student) {
         if (repository.existsById(student.getId())) {
-            throw new RuntimeException("Student already exists");
+            throw new DuplicateStudentException("Student already exists");
         }
         repository.save(student);
     }
 
     public Student getStudent(Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() ->
+                    new StudentNotFoundException("Student not found"));
     }
 
     public void deleteStudent(Integer id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Student not found");
+            throw new StudentNotFoundException("Student not found");
         }
         repository.deleteById(id);
     }
