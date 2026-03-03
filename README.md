@@ -12,6 +12,12 @@
     - HTTP status mapping
 
 ## Use the following command to run
+- Navigate to project folder:
+    ```bash
+        cd studentapi
     ```
+- And run:
+
+    ```bash
         ./mvnw spring-boot:run
     ```
