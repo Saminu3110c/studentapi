@@ -18,14 +18,14 @@
     - Shows SQL in console
     - Enables H2 web console
 - The backend now has:
-    - Spring Boot project
-    - REST Controller
-    - Service layer
-    - JPA Repository
+    - REST API
     - Validation
     - Exception handling
-    - H2 Database
-    - H2 Console
+    - H2 database
+    - JPA repository
+    - Derived queries
+    - Pagination
+    - Sorting
 
 ## Use the following command to run
 - Navigate to project folder:
