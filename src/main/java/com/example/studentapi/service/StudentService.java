@@ -6,8 +6,11 @@ import com.example.studentapi.model.Student;
 import com.example.studentapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
-import java.util.stream.Collectors;
+// import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -38,13 +41,26 @@ public class StudentService {
         repository.deleteById(id);
     }
 
-    public List<Student> getStudentsAboveAge(int age) {
-        return repository.findAll().stream()
-                .filter(student -> student.getAge() > age)
-                .collect(Collectors.toList());
+    // public List<Student> getStudentsAboveAge(int age) {
+    //     return repository.findAll().stream()
+    //             .filter(student -> student.getAge() > age)
+    //             .collect(Collectors.toList());
+    // }
+
+    public List<Student> getStudentsAboveAge(int age){
+        return repository.findByAgeGreaterThan(age);
+    }
+
+    public Student getStudentByEmail(String email){
+        return repository.findByEmail(email)
+        .orElseThrow(()->new StudentNotFoundException("Student with email " + email + " not found."));
     }
 
     public List<Student> getAllStudents() {
         return repository.findAll().stream().toList();
+    }
+
+    public Page<Student> getStudents(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }

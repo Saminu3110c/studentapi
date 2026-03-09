@@ -17,6 +17,15 @@
     - Auto-creates tables
     - Shows SQL in console
     - Enables H2 web console
+- The backend now has:
+    - Spring Boot project
+    - REST Controller
+    - Service layer
+    - JPA Repository
+    - Validation
+    - Exception handling
+    - H2 Database
+    - H2 Console
 
 ## Use the following command to run
 - Navigate to project folder:
@@ -27,4 +36,10 @@
 
     ```bash
         ./mvnw spring-boot:run
+    ```
+    ```bash
+        http://localhost:8080/h2-console
+    ```
+    ```bash
+        http://localhost:8080/students
     ```

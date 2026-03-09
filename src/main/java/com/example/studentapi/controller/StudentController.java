@@ -5,40 +5,54 @@ import com.example.studentapi.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/students")
 public class StudentController {
 
-    private final StudentService service;
+    private final StudentService studentService;
 
     public StudentController(StudentService service) {
-        this.service = service;
+        this.studentService = service;
     }
 
     @PostMapping
     public void addStudent(@Valid @RequestBody Student student) {
-        service.addStudent(student);
+        studentService.addStudent(student);
     }
 
     @GetMapping("/{id}")
     public Student getStudent(@PathVariable Integer id) {
-        return service.getStudent(id);
+        return studentService.getStudent(id);
     }
 
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Integer id) {
-        service.deleteStudent(id);
+        studentService.deleteStudent(id);
     }
 
+    // @GetMapping
+    // public List<Student> getAllStudents() {
+    //     return studentService.getAllStudents();
+    // }
+
     @GetMapping
-    public List<Student> getAllStudents() {
-        return service.getAllStudents();
+    public Page<Student> getStudents(Pageable pageable) {
+        return studentService.getStudents(pageable);
     }
 
     @GetMapping("/above/{age}")
     public List<Student> getStudentsAboveAge(@PathVariable int age) {
-        return service.getStudentsAboveAge(age);
+        return studentService.getStudentsAboveAge(age);
+    }
+
+
+    @GetMapping("/email/{email}")
+    public Student getStudentByEmail(@PathVariable String email) {
+        return studentService.getStudentByEmail(email);
     }
 }
