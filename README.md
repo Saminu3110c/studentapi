@@ -27,7 +27,19 @@
     - Pagination
     - Sorting
 
-## Use the following command to run
+- The API Now Supports
+    | Method | Endpoint                | Purpose           |
+    | ------ | ----------------------- | ----------------- |
+    | POST   | /students               | Create student    |
+    | GET    | /students               | Get students      |
+    | GET    | /students/{id}          | Get student by id |
+    | PUT    | /students/{id}          | Update student    |
+    | DELETE | /students/{id}          | Delete student    |
+    | GET    | /students/above/{age}   | Custom query      |
+    | GET    | /students/email/{email} | Custom query      |
+
+
+## Usage
 - Navigate to project folder:
     ```bash
         cd studentapi

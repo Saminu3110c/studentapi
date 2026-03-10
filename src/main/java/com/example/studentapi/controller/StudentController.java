@@ -55,4 +55,12 @@ public class StudentController {
     public Student getStudentByEmail(@PathVariable String email) {
         return studentService.getStudentByEmail(email);
     }
+
+    @PutMapping("/{id}")
+    public Student updateStudent(
+            @PathVariable Integer id,
+            @Valid @RequestBody Student student) {
+
+        return studentService.updateStudent(id, student);
+    }
 }

@@ -15,52 +15,65 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    private final StudentRepository repository;
+    private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository repository) {
-        this.repository = repository;
+        this.studentRepository = repository;
     }
 
     public void addStudent(Student student) {
-        if (repository.existsById(student.getId())) {
+        if (studentRepository.existsById(student.getId())) {
             throw new DuplicateStudentException("Student already exists");
         }
-        repository.save(student);
+        studentRepository.save(student);
     }
 
     public Student getStudent(Integer id) {
-        return repository.findById(id)
+        return studentRepository.findById(id)
                 .orElseThrow(() ->
                     new StudentNotFoundException("Student not found"));
     }
 
     public void deleteStudent(Integer id) {
-        if (!repository.existsById(id)) {
+        if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException("Student not found");
         }
-        repository.deleteById(id);
+        studentRepository.deleteById(id);
     }
 
     // public List<Student> getStudentsAboveAge(int age) {
-    //     return repository.findAll().stream()
+    //     return studentRepository.findAll().stream()
     //             .filter(student -> student.getAge() > age)
     //             .collect(Collectors.toList());
     // }
 
     public List<Student> getStudentsAboveAge(int age){
-        return repository.findByAgeGreaterThan(age);
+        return studentRepository.findByAgeGreaterThan(age);
     }
 
     public Student getStudentByEmail(String email){
-        return repository.findByEmail(email)
+        return studentRepository.findByEmail(email)
         .orElseThrow(()->new StudentNotFoundException("Student with email " + email + " not found."));
     }
 
     public List<Student> getAllStudents() {
-        return repository.findAll().stream().toList();
+        return studentRepository.findAll().stream().toList();
     }
 
     public Page<Student> getStudents(Pageable pageable) {
-        return repository.findAll(pageable);
+        return studentRepository.findAll(pageable);
+    }
+
+    public Student updateStudent(Integer id, Student updatedStudent) {
+
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException("Student with id " + id + " not found"));
+
+        existingStudent.setName(updatedStudent.getName());
+        existingStudent.setEmail(updatedStudent.getEmail());
+        existingStudent.setAge(updatedStudent.getAge());
+
+        return studentRepository.save(existingStudent);
     }
 }
