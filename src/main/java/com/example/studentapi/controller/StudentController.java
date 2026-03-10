@@ -1,5 +1,6 @@
 package com.example.studentapi.controller;
 
+import com.example.studentapi.dto.StudentDTO;
 import com.example.studentapi.model.Student;
 import com.example.studentapi.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
 
@@ -33,15 +35,20 @@ public class StudentController {
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Integer id) {
         studentService.deleteStudent(id);
-    }
+    } 
 
     // @GetMapping
-    // public List<Student> getAllStudents() {
-    //     return studentService.getAllStudents();
+    // public Page<Student> getStudents(Pageable pageable) {
+    //     return studentService.getStudents(pageable);
+    // }
+
+    // @GetMapping
+    // public Page<StudentDTO> getStudents(Pageable pageable) {
+    //     return studentService.getStudents(pageable);
     // }
 
     @GetMapping
-    public Page<Student> getStudents(Pageable pageable) {
+    public Page<StudentDTO> getStudents(@PageableDefault(size = 5) Pageable pageable) {
         return studentService.getStudents(pageable);
     }
 
@@ -49,7 +56,6 @@ public class StudentController {
     public List<Student> getStudentsAboveAge(@PathVariable int age) {
         return studentService.getStudentsAboveAge(age);
     }
-
 
     @GetMapping("/email/{email}")
     public Student getStudentByEmail(@PathVariable String email) {

@@ -1,5 +1,6 @@
 package com.example.studentapi.service;
 
+import com.example.studentapi.dto.StudentDTO;
 import com.example.studentapi.exception.DuplicateStudentException;
 import com.example.studentapi.exception.StudentNotFoundException;
 import com.example.studentapi.model.Student;
@@ -56,12 +57,13 @@ public class StudentService {
         .orElseThrow(()->new StudentNotFoundException("Student with email " + email + " not found."));
     }
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll().stream().toList();
-    }
+    // public Page<Student> getStudents(Pageable pageable) {
+    //     return studentRepository.findAll(pageable);
+    // }
 
-    public Page<Student> getStudents(Pageable pageable) {
-        return studentRepository.findAll(pageable);
+    public Page<StudentDTO> getStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable)
+                .map(this::convertToDTO);
     }
 
     public Student updateStudent(Integer id, Student updatedStudent) {
@@ -75,5 +77,14 @@ public class StudentService {
         existingStudent.setAge(updatedStudent.getAge());
 
         return studentRepository.save(existingStudent);
+    }
+
+    private StudentDTO convertToDTO(Student student) {
+        return new StudentDTO(
+                student.getId(),
+                student.getName(),
+                student.getEmail(),
+                student.getAge()
+        );
     }
 }
