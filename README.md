@@ -22,10 +22,14 @@
     - Validation
     - Exception handling
     - H2 database
-    - JPA repository
+    - JPA repository (Spring Data JPA)
     - Derived queries
     - Pagination
     - Sorting
+    - MapStruct
+    - Lombok
+    - DTO + Mapper layer
+
 
 - The API Now Supports
     | Method | Endpoint                | Purpose           |

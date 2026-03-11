@@ -3,6 +3,7 @@ package com.example.studentapi.service;
 import com.example.studentapi.dto.StudentDTO;
 import com.example.studentapi.exception.DuplicateStudentException;
 import com.example.studentapi.exception.StudentNotFoundException;
+import com.example.studentapi.mapper.StudentMapper;
 import com.example.studentapi.model.Student;
 import com.example.studentapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,12 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
-    public StudentService(StudentRepository repository) {
-        this.studentRepository = repository;
+    public StudentService(StudentRepository studentRepository,
+                        StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
     public void addStudent(Student student) {
@@ -63,7 +67,7 @@ public class StudentService {
 
     public Page<StudentDTO> getStudents(Pageable pageable) {
         return studentRepository.findAll(pageable)
-                .map(this::convertToDTO);
+                .map(studentMapper::toDTO);
     }
 
     public Student updateStudent(Integer id, Student updatedStudent) {
@@ -79,12 +83,12 @@ public class StudentService {
         return studentRepository.save(existingStudent);
     }
 
-    private StudentDTO convertToDTO(Student student) {
-        return new StudentDTO(
-                student.getId(),
-                student.getName(),
-                student.getEmail(),
-                student.getAge()
-        );
-    }
+    // private StudentDTO convertToDTO(Student student) {
+    //     return new StudentDTO(
+    //             student.getId(),
+    //             student.getName(),
+    //             student.getEmail(),
+    //             student.getAge()
+    //     );
+    // }
 }
