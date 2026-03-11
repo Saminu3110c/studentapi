@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-// import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -21,74 +20,87 @@ public class StudentService {
     private final StudentMapper studentMapper;
 
     public StudentService(StudentRepository studentRepository,
-                        StudentMapper studentMapper) {
+                          StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
     }
 
-    public void addStudent(Student student) {
+    // CREATE
+    public StudentDTO addStudent(StudentDTO studentDTO) {
+
+        Student student = studentMapper.toEntity(studentDTO);
+
         if (studentRepository.existsById(student.getId())) {
             throw new DuplicateStudentException("Student already exists");
         }
-        studentRepository.save(student);
+
+        Student savedStudent = studentRepository.save(student);
+
+        return studentMapper.toDTO(savedStudent);
     }
 
-    public Student getStudent(Integer id) {
-        return studentRepository.findById(id)
+    // READ BY ID
+    public StudentDTO getStudent(Integer id) {
+
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() ->
-                    new StudentNotFoundException("Student not found"));
+                        new StudentNotFoundException("Student not found"));
+
+        return studentMapper.toDTO(student);
     }
 
+    // DELETE
     public void deleteStudent(Integer id) {
+
         if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException("Student not found");
         }
+
         studentRepository.deleteById(id);
     }
 
-    // public List<Student> getStudentsAboveAge(int age) {
-    //     return studentRepository.findAll().stream()
-    //             .filter(student -> student.getAge() > age)
-    //             .collect(Collectors.toList());
-    // }
+    // FILTER BY AGE
+    public List<StudentDTO> getStudentsAboveAge(int age) {
 
-    public List<Student> getStudentsAboveAge(int age){
-        return studentRepository.findByAgeGreaterThan(age);
+        List<Student> students = studentRepository.findByAgeGreaterThan(age);
+
+        return students.stream()
+                .map(studentMapper::toDTO)
+                .toList();
     }
 
-    public Student getStudentByEmail(String email){
-        return studentRepository.findByEmail(email)
-        .orElseThrow(()->new StudentNotFoundException("Student with email " + email + " not found."));
+    // FIND BY EMAIL
+    public StudentDTO getStudentByEmail(String email) {
+
+        Student student = studentRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student with email " + email + " not found."));
+
+        return studentMapper.toDTO(student);
     }
 
-    // public Page<Student> getStudents(Pageable pageable) {
-    //     return studentRepository.findAll(pageable);
-    // }
-
+    // PAGINATION
     public Page<StudentDTO> getStudents(Pageable pageable) {
+
         return studentRepository.findAll(pageable)
                 .map(studentMapper::toDTO);
     }
 
-    public Student updateStudent(Integer id, Student updatedStudent) {
+    // UPDATE
+    public StudentDTO updateStudent(Integer id, StudentDTO updatedStudentDTO) {
 
         Student existingStudent = studentRepository.findById(id)
                 .orElseThrow(() ->
-                        new StudentNotFoundException("Student with id " + id + " not found"));
+                        new StudentNotFoundException(
+                                "Student with id " + id + " not found"));
 
-        existingStudent.setName(updatedStudent.getName());
-        existingStudent.setEmail(updatedStudent.getEmail());
-        existingStudent.setAge(updatedStudent.getAge());
+        existingStudent.setName(updatedStudentDTO.getName());
+        existingStudent.setEmail(updatedStudentDTO.getEmail());
+        existingStudent.setAge(updatedStudentDTO.getAge());
 
-        return studentRepository.save(existingStudent);
+        Student savedStudent = studentRepository.save(existingStudent);
+
+        return studentMapper.toDTO(savedStudent);
     }
-
-    // private StudentDTO convertToDTO(Student student) {
-    //     return new StudentDTO(
-    //             student.getId(),
-    //             student.getName(),
-    //             student.getEmail(),
-    //             student.getAge()
-    //     );
-    // }
 }
