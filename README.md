@@ -50,7 +50,7 @@
     ```bash
         git clone https://github.com/Saminu3110c/studentapi.git
     ```
-- Navigate to project folder:
+- Navigate to the project folder:
     ```bash
         cd studentapi
     ```
@@ -59,7 +59,7 @@
         ctrl + shift + p --> Maven: Reload Project
     ```
 
-- And run:
+- Run to start the project:
 
     ```bash
         ./mvnw spring-boot:run
