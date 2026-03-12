@@ -1,5 +1,6 @@
 package com.example.studentapi.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import com.example.studentapi.dto.StudentDTO;
 import com.example.studentapi.response.ApiResponse;
 import com.example.studentapi.service.StudentService;
@@ -22,6 +23,7 @@ public class StudentController {
         this.studentService = service;
     }
 
+    @Operation(summary = "Create a student")
     @PostMapping
     public ApiResponse<StudentDTO> addStudent(@Valid @RequestBody StudentDTO studentDTO) {
 
@@ -34,6 +36,7 @@ public class StudentController {
         );
     }
 
+    @Operation(summary = "Get student by ID")
     @GetMapping("/{id}")
     public ApiResponse<StudentDTO> getStudent(@PathVariable Integer id) {
 
@@ -46,6 +49,7 @@ public class StudentController {
         );
     }
 
+    @Operation(summary = "Delete a student")
     @DeleteMapping("/{id}")
     public ApiResponse<Void> deleteStudent(@PathVariable Integer id) {
 
@@ -58,6 +62,7 @@ public class StudentController {
         );
     }
 
+    @Operation(summary = "Get all students (5 per page by default)")
     @GetMapping
     public ApiResponse<Page<StudentDTO>> getStudents(
             @PageableDefault(size = 5) Pageable pageable) {
@@ -71,6 +76,7 @@ public class StudentController {
         );
     }
 
+    @Operation(summary = "Get students above a given age")
     @GetMapping("/above/{age}")
     public ApiResponse<List<StudentDTO>> getStudentsAboveAge(@PathVariable int age) {
 
@@ -83,6 +89,7 @@ public class StudentController {
         );
     }
 
+    @Operation(summary = "Get student by Email")
     @GetMapping("/email/{email}")
     public ApiResponse<StudentDTO> getStudentByEmail(@PathVariable String email) {
 
@@ -95,6 +102,7 @@ public class StudentController {
         );
     }
 
+    @Operation(summary = "Update a student")
     @PutMapping("/{id}")
     public ApiResponse<StudentDTO> updateStudent(
             @PathVariable Integer id,

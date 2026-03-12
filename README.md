@@ -29,6 +29,8 @@
     - MapStruct
     - Lombok
     - DTO + Mapper layer
+- Documentation
+    - Swagger/OpenAPI Documentation
 
 
 - The API Now Supports
@@ -58,4 +60,7 @@
     ```
     ```bash
         http://localhost:8080/students
+    ```
+    ```bash
+        http://localhost:8080/swagger-ui/index.html
     ```
