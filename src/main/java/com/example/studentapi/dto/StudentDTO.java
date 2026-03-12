@@ -1,17 +1,25 @@
 package com.example.studentapi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
+@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class StudentDTO {
 
+    @Id
     private Integer id;
-    private String name;
-    private String email;
-    private int age;
 
+    @NotBlank(message = "Name cannot be empty")
+    private String name;
+
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email is required")
+    private String email;
+
+    @Min(value = 1, message = "Age must be greater than 0")
+    private int age;
 }

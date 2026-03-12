@@ -58,39 +58,39 @@ public class GlobalExceptionHandler {
                 return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
-        // @ExceptionHandler(MethodArgumentNotValidException.class)
-        // public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex) {
-
-        // Map<String, String> errors = ex.getBindingResult()
-        //         .getFieldErrors()
-        //         .stream()
-        //         .collect(Collectors.toMap(
-        //                 fieldError -> fieldError.getField(),
-        //                 fieldError -> fieldError.getDefaultMessage()
-        //         ));
-
-        // return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        //         .body(errors);
-        // }
-
         @ExceptionHandler(MethodArgumentNotValidException.class)
-        public ResponseEntity<ApiResponse<Map<String, String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
+        public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .collect(Collectors.toMap(
                         fieldError -> fieldError.getField(),
-                        fieldError -> fieldError.getDefaultMessage(),
-                        (msg1, msg2) -> msg1
+                        fieldError -> fieldError.getDefaultMessage()
                 ));
 
-        ApiResponse<Map<String, String>> response =
-                new ApiResponse<>(false, "Validation failed", errors);
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errors);
         }
+
+        // @ExceptionHandler(MethodArgumentNotValidException.class)
+        // public ResponseEntity<ApiResponse<Map<String, String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
+
+        // Map<String, String> errors = ex.getBindingResult()
+        //         .getFieldErrors()
+        //         .stream()
+        //         .collect(Collectors.toMap(
+        //                 fieldError -> fieldError.getField(),
+        //                 fieldError -> fieldError.getDefaultMessage(),
+        //                 (msg1, msg2) -> msg1
+        //         ));
+
+        // ApiResponse<Map<String, String>> response =
+        //         new ApiResponse<>(false, "Validation failed", errors);
+
+        // return ResponseEntity
+        //         .status(HttpStatus.BAD_REQUEST)
+        //         .body(response);
+        // }
     
 }
