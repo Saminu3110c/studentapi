@@ -1,6 +1,5 @@
 # Welcome to student API
 - Successfully Achieved:
-    - You now understand:
     - Layered architecture
     - Dependency injection
     - REST endpoints
