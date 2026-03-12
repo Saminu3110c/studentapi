@@ -46,15 +46,26 @@
 
 
 ## Usage
+- Clone the repository:
+    ```bash
+        git clone https://github.com/Saminu3110c/studentapi.git
+    ```
 - Navigate to project folder:
     ```bash
         cd studentapi
     ```
+- Refresh the Project
+    ```bash
+        ctrl + shift + p --> Maven: Reload Project
+    ```
+
 - And run:
 
     ```bash
         ./mvnw spring-boot:run
     ```
+- Navigate to your browser:
+    - You can use any of the following
     ```bash
         http://localhost:8080/h2-console
     ```
