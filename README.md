@@ -75,3 +75,9 @@
     ```bash
         http://localhost:8080/swagger-ui/index.html
     ```
+
+### The Core Team
+- Saminu Isah - isah_s
+
+<span><i>Made at Mudiame University, Irrua (MUI)</i></span>
+<span><img alt='Schools Logo' src='' width='20px' /></span>
